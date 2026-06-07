@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Investor Profile — Kabeer Advisory</title>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -46,14 +46,46 @@
     z-index: 100;
   }
   .logo {
-    font-family: 'Big Shoulders Display', sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    letter-spacing: 0.08em;
-    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+  .logo-mark {
+    width: 36px;
+    height: 36px;
+    border: 0.5px solid #C9A84C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-mark .k {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: #C9A84C;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .logo-text { display: flex; flex-direction: column; gap: 3px; }
+  .logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    color: #C9A84C;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .logo-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 7px;
+    font-weight: 300;
+    letter-spacing: 0.38em;
+    color: #7a6030;
     text-transform: uppercase;
   }
-  .logo span { color: var(--text); }
 
   /* ── PROGRESS ── */
   .progress-wrap {
@@ -493,7 +525,13 @@
 <body>
 
 <header>
-  <div class="logo">Kabeer <span>Advisory</span></div>
+  <div class="logo">
+    <div class="logo-mark"><div class="k">K</div></div>
+    <div class="logo-text">
+      <div class="logo-name">Kabeer Advisory</div>
+      <div class="logo-sub">Dubai Real Estate</div>
+    </div>
+  </div>
   <div class="progress-wrap">
     <span class="progress-label" id="prog-label">1 of 6</span>
     <div class="progress-track">
@@ -1000,12 +1038,13 @@
         ).join('');
         goTo(6);
       } else {
-        throw new Error('Submission failed');
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(JSON.stringify(errData));
       }
     } catch (err) {
       btn.textContent = 'Submit Profile →';
       btn.disabled = false;
-      alert('Something went wrong. Please try again or WhatsApp Shibi directly.');
+      alert('Error: ' + err.message);
     }
   }
 
